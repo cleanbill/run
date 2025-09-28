@@ -102,8 +102,8 @@ export default function Home() {
               {team.map((name: string, i: number) => (
                 <NameInput takeRunner={takeRunner} nameChange={nameChange} i={i} name={name} key={"name-change-" + i}></NameInput>
               ))}
-              <button onClick={() => addRunner()} className="bg-blue-100 col-span-3 rounded-xl hover:bg-blue-200 mr-10 ml-10 mt-5 mb-5 p-5 font-black">Add</button>
-              <button onClick={() => reset()} className="bg-blue-100 col-span-3 rounded-xl hover:bg-blue-200 mr-10 ml-10 mt-5 mb-5 p-5 font-black">Reset</button>
+              <button onClick={() => addRunner()} className="bg-blue-100 col-span-3 rounded-xl hover:bg-blue-200 mr-10 ml-10 mt-5 mb-5 p-5 dark:text-black">Add</button>
+              <button onClick={() => reset()} className="bg-blue-100 col-span-3 rounded-xl hover:bg-blue-200 mr-10 ml-10 mt-5 mb-5 p-5 dark:text-black">Reset</button>
             </div>
           </div>
         </div>
