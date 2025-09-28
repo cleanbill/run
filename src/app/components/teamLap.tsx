@@ -10,7 +10,7 @@ type Props = {
 
 const TeamLap = ({ laps, teamLapNo, start, finished }: Props) => {
     return (
-        <fieldset className="bg-blue-100 border-4 border-black m-2 p-2 rounded">
+        <fieldset className="bg-blue-100 border-4 border-black dark:border-white m-2 p-2 rounded">
             <legend className="px-2 text-lg font-semibold text-gray-700">
                 Team Lap {teamLapNo + 1}
             </legend>
