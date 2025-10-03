@@ -20,7 +20,7 @@ export default function Home() {
   }, [])
 
   const setup = (team: Array<string>, laps: Array<Lap>) => {
-    if (laps.length == LAP_QTY - 1) {
+    if (laps.length >= LAP_QTY) {
       setTeamLaps(getTeamLaps(laps, team.length));
       return;
     }
@@ -91,7 +91,7 @@ export default function Home() {
       <main className="mb-30">
         <div className="lg:grid grid-cols-12">
 
-          <div className=" col-span-8">
+          <div className="col-span-8">
             {teamLaps.map((subLaps: Array<Lap>, teamLapNo: number) => (
               <TeamLap key={"teamLap-" + teamLapNo} teamLapNo={teamLapNo} start={start} finished={finished} laps={subLaps}></TeamLap>
             ))}

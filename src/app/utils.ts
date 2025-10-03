@@ -102,7 +102,7 @@ const getTransistionTime = (i: number) => TRANSISTION_TIME; // @TODO needs to be
 const getNextName = (i: number, laps: Array<Lap>, team: Array<string>) => {
     const runner = laps[i];
     const place = team.indexOf(runner.name);
-    const index = place + 1 == laps.length ? 0 : place + 1;
+    const index = place + 1 == team.length ? 0 : place + 1;
     return team[index];
 }
 

@@ -14,7 +14,7 @@ const TeamLap = ({ laps, teamLapNo, start, finished }: Props) => {
             <legend className="px-2 text-lg font-semibold text-gray-700 dark:bg-gray-200 dark:font-black dark:rounded-2xl">
                 Team Lap {teamLapNo + 1}
             </legend>
-            <section className="mt-2 text-lg text-gray-500 grid grid-cols-4 gap-2 mb-2 ">
+            <section className="mt-2 text-lg text-gray-500 grid grid-cols-4 mb-2 ">
                 <h3 className="text-gray-700 font-bold">Name</h3>
                 <h3 className="text-gray-700 font-bold">Start</h3>
                 <h3 className="text-gray-700 font-bold">End</h3>
