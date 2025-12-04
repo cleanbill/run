@@ -6,3 +6,5 @@ export type Lap = {
     time: string;
 }
 
+export type RunnerTransistions = Map<string, number>;
+

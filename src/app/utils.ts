@@ -10,8 +10,11 @@ export const getMinutesDifference = (time1: string, time2: string): number => {
 
 export const updateStartTimes = (i: number, finishedTime: string, newLaps: Array<Lap>, team: Array<string>): Array<Lap> => {
     const max = newLaps.length;
+    const tm = getTransistionTimes(newLaps);
     while (i < max) {
-        newLaps[i].start = addMinutesToTime(finishedTime, getTransistionTime(i));
+        const name = newLaps[i].name || "";
+        const time = tm.get(name) || TRANSISTION_TIME;
+        newLaps[i].start = addMinutesToTime(finishedTime, time);
         finishedTime = addMinutesToTime(newLaps[i].start, getLapTime(i, newLaps));
         i++;
     }
@@ -23,7 +26,8 @@ export const updateStartTimes = (i: number, finishedTime: string, newLaps: Array
         const lap = { index: (i + 1), name, start: "", end: "", time: "00:00" };
         newLaps.push(lap);
         i++;
-        newLaps[i].start = addMinutesToTime(finishedTime, getTransistionTime(i));
+        const time = tm.get(name) || TRANSISTION_TIME;
+        newLaps[i].start = addMinutesToTime(finishedTime, time);
         finishedTime = addMinutesToTime(newLaps[i].start, getLapTime(i, newLaps));
     }
 
@@ -72,6 +76,9 @@ const addMinutesToTime = (timeStr: string, minutes: number) => {
 }
 
 const timeToMinutes = (timeString: string): number => {
+    if (!timeString || timeString.length == 0) {
+        return 0;
+    }
     const [hours, minutes] = timeString.split(':').map(Number);
     return hours * 60 + minutes;
 }
@@ -97,7 +104,28 @@ const getLapTime = (i: number, laps: Array<Lap>) => {
 
 const TRANSISTION_TIME = 2;
 
-const getTransistionTime = (i: number) => TRANSISTION_TIME; // @TODO needs to be a dynamic avarage.
+const getTransistionTimes = (laps: Array<Lap>) => {
+    const runnerTransistions = new Map<string, Array<number>>();
+    for (let i = 0; i < laps.length; i++) {
+        const next = (i + 1) == laps.length ? 0 : i + 1;
+        const endTime = laps[i].end.length == 0 ? timeToMinutes(laps[next].start) : timeToMinutes(laps[i].end)
+        const startTime = timeToMinutes(laps[next].start);
+        const difference = endTime - startTime;
+        const trans = runnerTransistions.get(laps[i].name) || new Array<number>();
+        trans.push(difference);
+        runnerTransistions.set(laps[i].name, trans);
+    }
+    const runnerTransistionsAverage = new Map<string, number>();
+
+    const names = runnerTransistions.keys();
+    names.forEach((name: string) => {
+        const numbers = runnerTransistions.get(name) || [];
+        const sum = numbers.reduce((acc, current) => acc + current, 0);
+        const average = sum > 0 ? sum / numbers.length : TRANSISTION_TIME;
+        runnerTransistionsAverage.set(name, average);
+    });
+    return runnerTransistionsAverage;
+}
 
 const getNextName = (i: number, laps: Array<Lap>, team: Array<string>) => {
     const runner = laps[i];
